@@ -11,6 +11,12 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // app.use(creatTable)
+app.use("/",(req,res)=>{
+    res.json({
+        status:"success",
+        message:"please go to /identity route for task info"
+    })
+});
 
 app.use("/api/v1",routes)
 
