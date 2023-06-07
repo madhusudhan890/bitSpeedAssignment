@@ -3,13 +3,13 @@ const mysql = require("mysql2/promise")
 async function connect() {
   try {
   const connection = await mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: "password",
-  database: "project"
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE
   });
   if (connection) {
-  console.log('Database Connected');
+  console.log('Connected');
   // console.log(connection);
   // return "connected"
   }
