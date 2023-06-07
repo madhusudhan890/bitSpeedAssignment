@@ -1,4 +1,13 @@
 # bitSpeedAssignment
+
+API URL: http://3.0.27.208/api/v1/identity 
+API METHOD: POST
+BODY:{
+    phoneNumber
+    email
+}
+
+
 I will explain procedure i followed in order to succeed in my task based on files....
 
 Prerequisites:
