@@ -9,7 +9,7 @@ const routes = require("./routes/routes")
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use("/api/v1",routes)
 // app.use(creatTable)
 app.use("/",(req,res)=>{
     res.json({
@@ -18,7 +18,7 @@ app.use("/",(req,res)=>{
     })
 });
 
-app.use("/api/v1",routes)
+
 
 const PORT = 4000
 app.listen(PORT,() => {
