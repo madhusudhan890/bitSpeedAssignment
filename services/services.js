@@ -57,10 +57,11 @@ exports.identity = async(req ,res)=>{
                     const linkid = user_phone.data[0].id
                     const table=`INSERT INTO contact (phoneNumber,email,linkPrecedence,linkedId) VALUES (? ,?,?,?)`
                     const [rows,fields]=await  d.execute(table,[req.body.phoneNumber,req.body.email,"secondary",linkid])
+                    const row = await d.execute(`SELECT * FROM contact WHERE id=?`,[rows.insertId])
                     res.status(200).json({
                         status:"success",
                         message:"new user is being created successfully using new phoneNumber",
-                        data: fields
+                        data: row[0]
                     })
                 }
             
@@ -68,10 +69,11 @@ exports.identity = async(req ,res)=>{
         }else{
                 const table=`INSERT INTO contact (phoneNumber,email,linkPrecedence) VALUES (? ,?,?)`
                 const [rows,fields]=await  d.execute(table,[req.body.phoneNumber,req.body.email,"primary"])
+                const row = await d.execute(`SELECT * FROM contact WHERE id=?`,[rows.insertId])
                 res.status(200).json({
                     status:"success",
                     message:"new user is being created successfully",
-                    data: fields
+                    data: row[0]
                 })
         }
 
