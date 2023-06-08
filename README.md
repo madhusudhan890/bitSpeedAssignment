@@ -1,13 +1,22 @@
 # bitSpeedAssignment
 
+ACCESS THE URL IN BROWSER ITSELF.
+
 API URL: http://3.0.27.208/api/v1/identify 
 API METHOD: POST
+
 BODY:{
     phoneNumber
     email
 }
 
 
+----------------------------------------------------EJS TEMPLATES-----------------------------------------------------------
+1.By using ejs templates. Created a fronted pages for the code inorder to remove usage of postman to check the code..
+2.EJS templates are nothing but embedded javascript templates used to access browser with just node js backend code only.
+
+
+ ----------------------------------------------------------------------------------------------------------------------------
 I will explain procedure i followed in order to succeed in my task based on files....
 
 Prerequisites:
