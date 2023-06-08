@@ -12,11 +12,21 @@ exports.identity = async(req ,res)=>{
         var user_email = await used_email(req.body.email)
         // console.log(user_email,"ddddddd")
         if(user_exits.status === "success"){
-            res.status(400).json({
-                status:"fail",
+            // res.status(400).json({
+            //     status:"fail",
+            //     message:"There is already a user with these phoneNumber and email.Please use different PhoneNumber or email",
+            //     data:user_exits
+            // })
+            let result
+            if(user_exits){
+                result = {
+                status:400,
                 message:"There is already a user with these phoneNumber and email.Please use different PhoneNumber or email",
-                data:user_exits
-            })
+                data: user_exits.data
+                }
+
+            }
+            res.render("input.ejs",{data:result}) 
         }else if(user_phone.status === "success"){
                 if(user_phone.data.length >1){
                    const primaryUser = user_phone.data[0]
@@ -30,11 +40,21 @@ exports.identity = async(req ,res)=>{
                             "secondaryContactIds": [secondaryUser.id]
                         }
                     }
-                    res.status(400).json({
-                        status:"fail",
+                    // res.status(400).json({
+                    //     status:"fail",
+                    //     message:"There is more than two users with these phoneNumber.Please use different PhoneNumber",
+                    //     data:response
+                    // })
+                    let result
+                    if(response){
+                        result = {
+                        status:400,
                         message:"There is more than two users with these phoneNumber.Please use different PhoneNumber",
-                        data:response
-                    })
+                        data: response
+                        }
+    
+                    }
+                    res.render("input.ejs",{data:result}) 
                 }else if(user_phone.data.length === 1 && user_email.data.length ===1){
                         const primaryUser = user_email.data[0]
                         const secondaryUser = user_phone.data[0]
@@ -48,33 +68,74 @@ exports.identity = async(req ,res)=>{
                              "secondaryContactIds": [secondaryUser.id]
                          }
                      }
-                        res.status(200).json({
-                            status:"success",
+                        // res.status(200).json({
+                        //     status:"success",
+                        //     message:"user is being successfully updated",
+                        //     data: response
+                        // })
+                        let result
+                        if(response){
+                            result = {
+                            status:200,
                             message:"user is being successfully updated",
                             data: response
-                        })
+                            }
+        
+                        }
+                        res.render("input.ejs",{data:result}) 
                 }else{
                     const linkid = user_phone.data[0].id
                     const table=`INSERT INTO contact (phoneNumber,email,linkPrecedence,linkedId) VALUES (? ,?,?,?)`
                     const [rows,fields]=await  d.execute(table,[req.body.phoneNumber,req.body.email,"secondary",linkid])
                     const row = await d.execute(`SELECT * FROM contact WHERE id=?`,[rows.insertId])
-                    res.status(200).json({
-                        status:"success",
+                    // res.status(200).json({
+                    //     status:"success",
+                    //     message:"new user is being created successfully using new phoneNumber",
+                    //     data: row[0]
+                    // })
+                    let result
+                    if(row){
+                        result = {
+                        status:200,
                         message:"new user is being created successfully using new phoneNumber",
                         data: row[0]
-                    })
+                        }
+    
+                    }
+                    res.render("input.ejs",{data:result}) 
                 }
             
 
         }else{
+                if(user_email.data.length > 1){
+                    
+                        let result = {
+                        status:400,
+                        message:"User email being assigned to more than 2 users already.Please use new email",
+                        }
+        
+                   
+                    res.render("input.ejs",{data:result}) 
+                }else{
                 const table=`INSERT INTO contact (phoneNumber,email,linkPrecedence) VALUES (? ,?,?)`
                 const [rows,fields]=await  d.execute(table,[req.body.phoneNumber,req.body.email,"primary"])
                 const row = await d.execute(`SELECT * FROM contact WHERE id=?`,[rows.insertId])
-                res.status(200).json({
-                    status:"success",
-                    message:"new user is being created successfully",
+                // res.status(200).json({
+                //     status:"success",
+                //     message:"new user is being created successfully",
+                //     data: row[0]
+                // })
+                let result
+                if(row){
+                    result = {
+                    status:200,
+                    message:"user created successfully",
                     data: row[0]
-                })
+                    }
+    
+                }
+                res.render("input.ejs",{data:result}) 
+            }
         }
 
 
@@ -127,4 +188,8 @@ const used_email = async(email)=>{
     } catch (error) { 
         throw error
     }
+}
+
+exports.getIdentity = async(req,res)=>{
+    res.render("pages/output.ejs")
 }
