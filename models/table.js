@@ -5,7 +5,7 @@ const table =
     `
     CREATE TABLE IF NOT EXISTS contact (
         id SERIAL PRIMARY KEY,
-        phoneNumber varchar(16),
+        phoneNumber int,
         email varchar(32),
         linkedId int default null,
         linkPrecedence enum('primary','secondary'),
