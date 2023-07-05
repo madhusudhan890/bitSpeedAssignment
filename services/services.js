@@ -81,7 +81,7 @@ exports.identity = async(req ,res)=>{
                             data: response
                             }
         
-                        }
+                        };
                         res.render("input.ejs",{data:result}) 
                 }else{
                     const linkid = user_phone.data[0].id
