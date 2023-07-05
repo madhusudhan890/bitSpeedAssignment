@@ -7,7 +7,7 @@ async function dam(table){
             if(err) return reject(err)
             else return resolve(result)
         })
-    })
+    });
 };
 
 exports.testing = async (req,res)=>{
