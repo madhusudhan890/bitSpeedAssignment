@@ -8,7 +8,7 @@ async function dam(table){
             else return resolve(result)
         })
     })
-}
+};
 
 exports.testing = async (req,res)=>{
     const table = `SELECT * FROM contact`
