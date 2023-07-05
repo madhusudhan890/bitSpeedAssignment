@@ -10,9 +10,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine","ejs");
 
-app.use("/api/v1/",routes)
+app.use("/api/v1/",routes) 
 
 const PORT = 4000
-app.listen(PORT,() => {
-    console.log(`server is running at port ${PORT}`)
+app.listen(PORT,(err) => {
+    if(err){
+        process.exit()
+    }else{
+        console.log(`server is running at port ${PORT}`)
+    }
+ 
 })

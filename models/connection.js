@@ -26,4 +26,4 @@ async function connect() {
 //   database: process.env.MYSQL_DATABASE
 // });
 
-module.exports= connection;
+module.exports= connect;
